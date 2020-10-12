@@ -41,7 +41,7 @@ def openjson(json_file):
             data = json.load(data_file)
         return data
     else:
-        print 'Select the correct file and try again.'
+        print('Select the correct file and try again.')
         sys.exit(1)
 
 
@@ -88,7 +88,7 @@ def createcsv(csv_file_name, data):
             for row in data:
                 wr.writerow(row)
     except IOError as e:
-        print "I/O error({0}): {1}".format(e.errno, e.strerror)
+        print("I/O error({0}): {1}".format(e.errno, e.strerror))
 
 
 def validate(date):
@@ -110,8 +110,8 @@ def table_exists(input_date, all_tables):
     if input_date in all_tables:
         return True
     else:
-        print '\n    ERROR: Could not find the date in the database.'
-        print '    Available dates: ' + ', '.join(all_tables) + '.'
+        print('\n    ERROR: Could not find the date in the database.')
+        print('    Available dates: ' + ', '.join(all_tables) + '.')
         return False
 
 
@@ -174,7 +174,7 @@ def main():
                 createcsv(str(table), readdbtable(openjson(json_file),
                                                   str(table)))
     except KeyboardInterrupt:
-        print "\nExecution cancelled. Bye!"
+        print("\nExecution cancelled. Bye!")
         sys.exit(1)
 
 
