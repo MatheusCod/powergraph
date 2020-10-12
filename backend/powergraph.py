@@ -56,9 +56,9 @@ def formated_print(dic):
     """
     Pretty print the output of the IPMI execution
     """
-    print dic['Year'] + '/' + get_month_number(dic['Month']) + '/' + \
+    print(dic['Year'] + '/' + get_month_number(dic['Month']) + '/' + \
         dic['Day'] + ' | ' + dic['Hour'] + ':' + dic['Min'] + ':' + \
-        dic['Seg'] + ' | ' + dic['Energy'] + ' Watts'
+        dic['Seg'] + ' | ' + dic['Energy'] + ' Watts')
 
 
 def get_month_number(month):
@@ -107,7 +107,7 @@ def build_command(args, parser):
     """
     cmd = "ipmitool -I lanplus"
     if not args.host:
-        print "\nERROR: hostname is required.\n"
+        print("\nERROR: hostname is required.\n")
         parser.print_help()
         sys.exit(1)
     else:
@@ -115,7 +115,7 @@ def build_command(args, parser):
     if args.port:
         cmd += ' -p ' + args.port
     if not args.user:
-        print "\nERROR: username is required.\n"
+        print("\nERROR: username is required.\n")
         parser.print_help()
         sys.exit(1)
     else:
@@ -143,7 +143,7 @@ def run(command, counter):
     Parsers the result of the command execution
     """
     result = execute_stdout(command)
-    aux = result[1].split('\n')
+    aux = (result[1].decode('utf-8')).split('\n')
     for count, entry in enumerate(aux):
         if 'Instantaneous power reading' in entry:
             energy = entry.replace(' ', '').split(':')[1]
@@ -162,7 +162,7 @@ def run(command, counter):
             infos['Energy'] = energy
             info = create_string(counter + 1, infos)
             if not STORE:
-                print info
+                print(info)
             else:
                 savedb(info.split('|'))
 
@@ -184,7 +184,7 @@ def run_ipmi(command):
                 nread_counter += 1
                 time.sleep(float(INTERVAL))
     except KeyboardInterrupt:
-        print "\nExecution cancelled. Bye!"
+        print("\nExecution cancelled. Bye!")
         sys.exit(1)
 
 
